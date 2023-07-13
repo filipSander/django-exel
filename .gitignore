@@ -1,6 +1,3 @@
-# my
-
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -78,6 +75,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
+venv/*
 .env
 .venv
 env/
