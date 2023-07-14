@@ -18,7 +18,7 @@ class ProdcutUpdate(UpdateView):
         'facturer_сountry',
         'descripton',
         'image'
-        ]
+    ]
 
 def index(request):
     if request.POST:
@@ -50,10 +50,8 @@ def change(request):
             form.save()
         else:
             messages.error(request, "Данные заполнены некорректно.")
-
     form = ProductForm()
     data = {
         'form': form
     }
-
     return render(request, 'change.html', data)
