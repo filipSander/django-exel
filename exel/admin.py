@@ -19,3 +19,5 @@ class ProductAdmin(ImportExportActionModelAdmin):
     resource_class = ProductResource
     
 admin.site.register(Product, ProductAdmin)
+admin.site.site_title = "Кулибин"
+admin.site.site_header  = "Кулибин"

@@ -22,6 +22,8 @@ body {
   }
 
 .forms{
+    margin: 60px auto;
+    width: 500px;
     border-color: black;
     background-color: #faebd7;
     padding: 10px;
@@ -42,8 +44,33 @@ p{
     text-align: center;
     margin: 0px;
 }
-img{
-    height: 100;
-    width: 150;
+
+.img-thumbnail{
+  width: 200px;
+  height: 200px;
 }
+
+.container{
+  width: 600px!important;
+  margin: 0 auto;
+}
+
+.item a{
+  height: 100%;
+}
+.back{
+  display: block;
+  width: 200px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.item{
+  width: 600px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
 

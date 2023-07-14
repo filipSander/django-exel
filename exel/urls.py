@@ -21,5 +21,6 @@ from exel import views
 
 
 urlpatterns = [
-    path('', views.index, name="ds")
+    path('', views.index),
+    path('<int:pk>/change', views.ProdcutUpdate.as_view())
 ]
