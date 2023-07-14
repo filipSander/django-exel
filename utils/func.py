@@ -40,14 +40,13 @@ def uploadFile(data):
     Product.objects.bulk_create(products_bulk_lust)
     for p in products_bulk_lust:
         ids.append(p.id)
-    
     return ids
 
-def getProducts(ids):
+def getProducts(product_ids):
     products = []
-    if len(ids) > 0:
-        for id in ids:
-            try:
-                products.append(Product.objects.get(pk=id))
-            except: 
-                print("Продукт не найден")
+    for id in product_ids:
+        try:
+            products.append(Product.objects.get(pk=id))
+        except: 
+            print("Продукт не найден")
+    return products

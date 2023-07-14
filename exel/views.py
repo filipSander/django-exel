@@ -23,21 +23,21 @@ class ProdcutUpdate(UpdateView):
 def index(request):
     if request.POST:
         try:
+
             file = request.FILES['file']
             uploading_file = uploadFile({"file": file})
             
             if len(uploading_file) > 0:
                 messages.success(request, "Файл загружен.")
                 request.session['ids'] = uploading_file
-                products = getProducts(uploading_file)
-                return render(request, 'index.html', {"products": products})
+                return render(request, 'index.html', {"products": getProducts(uploading_file)})
             else:
                 messages.error(request, "Ошибка при загрузке файла.")
         except:
             messages.error(request, "Ошибка при загрузке файла.")
-    
-    products = getProducts(request.session.get('ids', []))
-    return render(request, 'index.html', {"products": products})
+
+    session = request.session.get('ids', [])
+    return render(request, 'index.html', {"products": getProducts(session)})
     
 
 def change(request):
