@@ -42,3 +42,12 @@ def uploadFile(data):
         ids.append(p.id)
     
     return ids
+
+def getProducts(ids):
+    products = []
+    if len(ids) > 0:
+        for id in ids:
+            try:
+                products.append(Product.objects.get(pk=id))
+            except: 
+                print("Продукт не найден")

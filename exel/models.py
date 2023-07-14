@@ -7,7 +7,7 @@ class Product(models.Model):
     place = models.CharField("Область применения", max_length=300)
     facturer = models.CharField("Производитель", max_length=150)
     facturer_сountry = models.CharField("Страна производителя", max_length=150, default="")
-    descripton = models.CharField("Примечания", max_length=300)
+    descripton = models.CharField("Примечание", max_length=300)
     image = models.ImageField("Картинка", upload_to="images/")  
     
     def __str__(self) -> str:

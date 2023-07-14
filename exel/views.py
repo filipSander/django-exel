@@ -5,23 +5,22 @@ from django.contrib import messages
 from exel.models import Product
 from .forms import ProductForm
 
-from utils.uploadings import uploadFile
+from utils.func import getProducts, uploadFile
 
 
 class ProdcutUpdate(UpdateView):
     model = Product
     template_name = 'change.html'
     fields = [
-            'name',
-            'place',
-            'facturer',
-            'facturer_сountry',
-            'descripton',
-            'image'
-            ]
+        'name',
+        'place',
+        'facturer',
+        'facturer_сountry',
+        'descripton',
+        'image'
+        ]
 
 def index(request):
-
     if request.POST:
         try:
             file = request.FILES['file']
@@ -30,25 +29,18 @@ def index(request):
             if len(uploading_file) > 0:
                 messages.success(request, "Файл загружен.")
                 request.session['ids'] = uploading_file
-                products = []
-                for id in uploading_file:
-                    products.append(Product.objects.get(pk=id))
+                products = getProducts(uploading_file)
+                return render(request, 'index.html', {"products": products})
             else:
                 messages.error(request, "Ошибка при загрузке файла.")
         except:
             messages.error(request, "Ошибка при загрузке файла.")
-
-    cheeck_session = request.session.get('ids', [])
-    if len(cheeck_session) > 0:
-        products = []
-        for id in cheeck_session:
-            products.append(Product.objects.get(pk=id))
-
+    
+    products = getProducts(request.session.get('ids', []))
     return render(request, 'index.html', {"products": products})
-        
+    
 
 def change(request):
-
     if request.POST:
         print(request.POST)
         print(request.FILES)
