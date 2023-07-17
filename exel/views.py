@@ -1,29 +1,21 @@
-from django.shortcuts import render
+from django.http import FileResponse, HttpResponse
+from django.shortcuts import redirect, render
 from django.views.generic import UpdateView
 from django.contrib import messages
+import openpyxl
 
 from exel.models import Product
 from .forms import ProductForm
 
-from utils.func import getProducts, uploadFile
-
-
-class ProdcutUpdate(UpdateView):
-    model = Product
-    template_name = 'change.html'
-    fields = [
-        'name',
-        'place',
-        'facturer',
-        'facturer_сountry',
-        'descripton',
-        'image'
-    ]
+from utils.func import changeProdcut, createExlx, getProducts, uploadFile
 
 def index(request):
+    session = request.session.get('ids', [])
+    return render(request, 'index.html', {"products": getProducts(session)})
+
+def loadFile(request):
     if request.POST:
         try:
-
             file = request.FILES['file']
             uploading_file = uploadFile({"file": file})
             
@@ -35,23 +27,32 @@ def index(request):
                 messages.error(request, "Ошибка при загрузке файла.")
         except:
             messages.error(request, "Ошибка при загрузке файла.")
+    return redirect("/")
 
-    session = request.session.get('ids', [])
-    return render(request, 'index.html', {"products": getProducts(session)})
+def downLoadFile(request):
+    return createExlx(request.session.get('ids', [])) 
     
+
 
 def change(request):
     if request.POST:
-        print(request.POST)
-        print(request.FILES)
-        form = ProductForm(request.POST)
-        if form.is_valid():
-            messages.success(request, "Информация о товаре изменена.")
-            form.save()
+        file = None
+        try:
+            file = request.FILES['file']
+        except:
+            pass 
+        name = request.POST['name']
+        if changeProdcut({
+            "file": file,
+            "id": request.POST['id'],
+            "name": name,
+            "place":  request.POST['place'],
+            "facturer": request.POST['facturer'],
+            "facturer_сountry": request.POST['facturer_сountry'],
+            "descripton": request.POST['descripton']
+            }):
+            messages.success(request, name + " запись обновленна.")
         else:
-            messages.error(request, "Данные заполнены некорректно.")
-    form = ProductForm()
-    data = {
-        'form': form
-    }
-    return render(request, 'change.html', data)
+            messages.error(request, "Ошибка при обновлении записи.")
+    return redirect("/")
+    

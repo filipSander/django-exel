@@ -22,5 +22,7 @@ from exel import views
 
 urlpatterns = [
     path('', views.index),
-    path('<int:pk>/change', views.ProdcutUpdate.as_view())
+    path('change/', views.change, name="changeProduct"),
+    path('load/', views.loadFile, name='loadFile'),
+    path('download/', views.downLoadFile, name='downloadFile')
 ]

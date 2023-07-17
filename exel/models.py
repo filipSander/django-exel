@@ -19,3 +19,6 @@ class Product(models.Model):
     class Meta:
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
+    
+    def getAttr(self):
+        return [self.name,self.place, str(self.image), self.facturer, self.facturer_сountry, self.descripton]

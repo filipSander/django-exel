@@ -2,6 +2,15 @@ body {
   margin:40px;
   background-color:#ccc0af;
 }
+
+.link{
+  display: block;
+  padding: 20px 0 0 0;
+  text-align: right;
+  font-size: 20px;
+  margin-top: 12px;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -48,12 +57,13 @@ p{
 }
 
 .img-thumbnail{
-width: 200px;
-height: 200px;
+width: auto;
+height: 100px!important;
 }
 
 .container{
-width: 630px!important;
+max-width: 90%!important;
+width: 90%!important;
 height: auto;
 margin: 0 auto;
 background-color:#faebd7;
@@ -69,6 +79,12 @@ display: block;
 width: 200px;
 text-align: center;
 margin: 0 auto;
+}
+
+textarea{
+  width: 100%;
+  height: 165px;
+  background-color: #f0eae3;
 }
 
 .item{
@@ -88,7 +104,7 @@ margin-right: 20px;
 max-width: 100%;
 color: #fff;
 padding: 5px;
-background: #084cdf;
+background: #7D91C0;
 border-radius: 10px;
 border: 2px solid #555;
 cursor: pointer;
@@ -97,7 +113,7 @@ cursor: pointer;
 
 
 input[type=file]::file-selector-button:hover {
-background: #0d45a5;
+background: #728cca;
 }
 
 
@@ -138,3 +154,66 @@ pointer-events: none;
 opacity: 0.65;
 }
 
+.field__wrapper {
+  width: 100%;
+  position: relative;
+  margin: 15px 0;
+  text-align: center;
+}
+ 
+.field__file {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+}
+ 
+.field__file-wrapper {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+ 
+.field__file-fake {
+  height: 50px;
+  width: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  font-size: 12px;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0 15px;
+  border: 1px solid #c7c7c7;
+  border-radius: 3px 0 0 3px;
+  border-right: none;
+}
+ 
+.field__file-button {
+  width: calc(100% - 50px);
+  height: 50px;
+  background: #7D91C0;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-radius: 0 3px 3px 0;
+  cursor: pointer;
+}
