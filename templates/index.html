@@ -58,11 +58,11 @@
                                 </label>
                              </div>
                         </td>
-                        <td scope="row" > <textarea required type="text" name="name" >{{ product.name }}</textarea></td>
-                        <td> <textarea required type="text" name="place">{{ product.place }}</textarea></td>
-                        <td> <textarea required type="text" name="facturer" >{{ product.facturer }}</textarea></td>
-                        <td> <textarea required type="text" name="facturer_сountry">{{ product.facturer_сountry }}</textarea></td>
-                        <td> <textarea required type="text" name="descripton">{{ product.descripton }}</textarea></td>
+                        <td scope="row" > <textarea maxlength="300" required type="text" name="name" >{{ product.name }}</textarea></td>
+                        <td> <textarea maxlength="300" required type="text" name="place">{{ product.place }}</textarea></td>
+                        <td> <textarea maxlength="150" required type="text" name="facturer" >{{ product.facturer }}</textarea></td>
+                        <td> <textarea maxlength="150" required type="text" name="facturer_сountry">{{ product.facturer_сountry }}</textarea></td>
+                        <td> <textarea maxlength="300" required type="text" name="descripton">{{ product.descripton }}</textarea></td>
                         <td><input class="btn_btn-secondary" type="submit" value="Изменить"></td>
                     </form>
    

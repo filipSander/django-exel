@@ -37,6 +37,7 @@ def downLoadFile(request):
 def change(request):
     if request.POST:
         file = None
+        id = request.POST['id']
         try:
             file = request.FILES['file']
         except:
@@ -44,7 +45,7 @@ def change(request):
         name = request.POST['name']
         if changeProdcut({
             "file": file,
-            "id": request.POST['id'],
+            "id": id,
             "name": name,
             "place":  request.POST['place'],
             "facturer": request.POST['facturer'],
@@ -54,5 +55,5 @@ def change(request):
             messages.success(request, name + " запись обновленна.")
         else:
             messages.error(request, "Ошибка при обновлении записи.")
-    return redirect("/")
+    return redirect("/#" + id)
     
