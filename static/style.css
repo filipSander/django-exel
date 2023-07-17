@@ -19,7 +19,7 @@ body {
   z-index: 9999;
 }
 
-* {
+*{
   box-sizing: border-box;
 }
 input {

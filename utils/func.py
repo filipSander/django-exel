@@ -5,6 +5,8 @@ import sys
 from django.http import HttpResponse
 from xlsxwriter.workbook import Workbook
 
+from app.settings import BASE_DIR, TEMPLATE_TEXT
+
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'test_project_settings'
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -59,10 +61,8 @@ def getProducts(product_ids):
 
 
 def changeProdcut(data):
-
     product = Product.objects.get(pk=data.get('id'))
     product.name = data.get('name')
-    
     img = data.get("file")
     print(img)
     if img != None:
@@ -79,20 +79,48 @@ def createExlx(product_ids):
     output = io.BytesIO()
     workbook = Workbook(output, {'in_memory': True})
     worksheet = workbook.add_worksheet()
+    worksheet.set_column(0, 1, 10)
+    cell_format = workbook.add_format({
+        'border':   1,
+    })
+
+    header_format = workbook.add_format({
+        'border':   1,
+    })
+    cell_format.set_text_wrap()
+    cell_format.set_align('top')
+
+    header_format.set_text_wrap()
+    header_format.set_align('top')
+    worksheet.set_column(2, 5, 20)
+
+    merge_format = workbook.add_format({    
+        'align': 'center',
+        'valign': 'vcenter',
+        })
+    worksheet.merge_range('A1:F8', TEMPLATE_TEXT, merge_format)
+
     products = getProducts(product_ids)
-    i = 1
+    i = 9
     for p in products:
         j = 0
         for attr in p.getAttr():
-            worksheet.write(i, j, attr)
+            if j == 0 and attr != '':
+                worksheet.write(i, j, "", cell_format)
+                worksheet.insert_image(i, j, str(BASE_DIR) + "\\" + attr, {"x_scale": 0.7, "y_scale": 0.7,"x_offset": 1, "y_offset": 1})
+            else:
+                worksheet.write(i, j, attr, cell_format)
             j+=1
+            worksheet.set_row(i, 60) 
         i+=1
-    worksheet.write(0, 0, 'Наименование')
-    worksheet.write(0, 1, 'Область применения')
-    worksheet.write(0, 2, 'Картинка')
-    worksheet.write(0, 3, 'Производитель')
-    worksheet.write(0, 4, 'Страна Производителя')
-    worksheet.write(0, 5, 'Описание')
+    header_format.set_align('center')
+    header_format.set_align('vcenter')
+    worksheet.write(8, 0, 'Фото', header_format)
+    worksheet.write(8, 1, 'Наименование ', header_format)
+    worksheet.write(8, 2, 'Область применения', header_format)
+    worksheet.write(8, 3, 'Примечание \n (параметры)', header_format)
+    worksheet.write(8, 4, 'Страна производителя', header_format)
+    worksheet.write(8, 5, 'Производитель', header_format)
 
     workbook.close()
 

@@ -130,3 +130,12 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+TEMPLATE_TEXT = """
+Общество с ограниченной ответственностью ТК «Промэлемент»
+ИНН 5501188610   КПП 550101001
+р/с 40702 810 7232 1000 1862 
+в филиале «Новосибирский» АО «Альфа-Банк» БИК 045004774  
+г. Омск, ул. Бахатовой 7, 74
+
+"""

@@ -21,4 +21,11 @@ class Product(models.Model):
         verbose_name_plural = "Продукты"
     
     def getAttr(self):
-        return [self.name,self.place, str(self.image), self.facturer, self.facturer_сountry, self.descripton]
+        return [
+            str(self.image),
+            self.name, 
+            self.place, 
+            self.descripton, 
+            self.facturer_сountry, 
+            self.facturer
+            ]
