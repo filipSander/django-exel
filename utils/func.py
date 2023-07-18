@@ -37,10 +37,10 @@ def uploadFile(data):
                 newProduct = Product()
                 newProduct.name = row[1].value
                 newProduct.facturer = row[5].value
-
                 products_bulk_lust.append(newProduct)
             else:
                 for p in products:
+                    Product.objects.filter(id=p.id).update(facturer=row[5].value)
                     ids.append(p.id)
         else:
             continue

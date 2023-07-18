@@ -24,18 +24,19 @@ class Product(models.Model):
         return f'/{self.id}/change'
     
     def save(self, **kwargs):
-        output_size = (169, 169)
-        output_thumb = BytesIO()
+        if self.image:
+            output_size = (169, 169)
+            output_thumb = BytesIO()
 
-        img = Image.open(self.image)
-        img_name = self.image.name.split('.')[0]
+            img = Image.open(self.image)
+            img_name = self.image.name.split('.')[0]
 
-        if img.height > 169 and img.width > 169:
-            img.thumbnail(output_size)
-            img.save(output_thumb,format='JPEG',quality=90)
-            self.thumbnails = InMemoryUploadedFile(output_thumb, 'ImageField', f"{img_name}_thumb.jpg", 'image/jpeg', sys.getsizeof(output_thumb), None)
-        else: 
-            self.thumbnails = self.image
+            if img.height > 169 and img.width > 169:
+                img.thumbnail(output_size)
+                img.save(output_thumb,format='JPEG',quality=90)
+                self.thumbnails = InMemoryUploadedFile(output_thumb, 'ImageField', f"{img_name}_thumb.jpg", 'image/jpeg', sys.getsizeof(output_thumb), None)
+            else: 
+                self.thumbnails = self.image
         super(Product, self).save()
     
     class Meta:

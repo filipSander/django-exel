@@ -17,8 +17,8 @@ def index(request):
     return render(request, 'index.html', {"products": products})
 
 def loadFile(request):
+    request.session['ids'] = []
     if request.POST:
-        try:
             file = request.FILES['file']
             uploading_file = uploadFile({"file": file})
             
@@ -28,8 +28,6 @@ def loadFile(request):
                 return redirect("/")
             else:
                 messages.error(request, "Ошибка при загрузке файла.")
-        except:
-            messages.error(request, "Ошибка при загрузке файла.")
 
     return redirect("/")
 
