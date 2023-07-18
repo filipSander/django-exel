@@ -11,7 +11,10 @@ from utils.func import changeProdcut, createExlx, getProducts, uploadFile
 
 def index(request):
     session = request.session.get('ids', [])
-    return render(request, 'index.html', {"products": getProducts(session)})
+    products = getProducts(session)
+    if len(products) == 0:
+        request.session['ids'] = []
+    return render(request, 'index.html', {"products": products})
 
 def loadFile(request):
     if request.POST:
@@ -22,16 +25,16 @@ def loadFile(request):
             if len(uploading_file) > 0:
                 messages.success(request, "Файл загружен.")
                 request.session['ids'] = uploading_file
-                return render(request, 'index.html', {"products": getProducts(uploading_file)})
+                return redirect("/")
             else:
                 messages.error(request, "Ошибка при загрузке файла.")
         except:
             messages.error(request, "Ошибка при загрузке файла.")
+
     return redirect("/")
 
 def downLoadFile(request):
     return createExlx(request.session.get('ids', [])) 
-    
 
 
 def change(request):

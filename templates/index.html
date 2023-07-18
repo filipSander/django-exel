@@ -48,10 +48,10 @@
                         <input type="hidden" name="id" value="{{product.id}}">
                         <td>
                             {% if product.image %}
-                             <img src="{{ product.image }}" class="img-thumbnail" alt="Картинка продукта">
+                              <img src="{{ product.thumbnails }}" class="img-thumbnail" alt="Картинка продукта">
                             {% endif %}
                             <div class="field__wrapper">
-                                <input type="file" name="file" id="l{{product.id}}" class="field field__file">
+                                <input accept="image/jpeg image/jpg" type="file" name="file" id="l{{product.id}}" class="field field__file">
                                 <label class="field__file-wrapper wrapper{{product.id}}" for="l{{product.id}}">
                                   <div class="field__file-fake fakel{{product.id}}">X</div>
                                   <div class="field__file-button btn_btn-secondary bt{{product.id}}">Выбрать</div>

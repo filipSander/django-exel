@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timezone
 import io
 import os
 import sys
@@ -30,14 +30,14 @@ def uploadFile(data):
     ids = []
 
     for row in sheet.iter_rows():
-        
-        if row[0].data_type == 'n' and row[1].data_type == 's':
+        if row[0].data_type == 'n' and row[1].data_type == 's' and row[5].data_type == 's':
             products = Product.objects.filter(name=row[1].value)
             if len(products) == 0:
                 print('create product ' + row[1].value)
                 newProduct = Product()
                 newProduct.name = row[1].value
-                newProduct.facturer = sheet['A1'].value
+                newProduct.facturer = row[5].value
+
                 products_bulk_lust.append(newProduct)
             else:
                 for p in products:
@@ -79,7 +79,7 @@ def createExlx(product_ids):
     output = io.BytesIO()
     workbook = Workbook(output, {'in_memory': True})
     worksheet = workbook.add_worksheet()
-    worksheet.set_column(0, 1, 10)
+    worksheet.set_column(0, 1, 12)
     cell_format = workbook.add_format({
         'border':   1,
     })
@@ -92,14 +92,14 @@ def createExlx(product_ids):
 
     header_format.set_text_wrap()
     header_format.set_align('top')
-    worksheet.set_column(2, 5, 20)
+    worksheet.set_column(2, 4, 20)
 
     merge_format = workbook.add_format({    
         'align': 'center',
         'valign': 'vcenter',
         })
+    merge_format.set_text_wrap()
     worksheet.merge_range('A1:F8', TEMPLATE_TEXT, merge_format)
-
     products = getProducts(product_ids)
     i = 9
     for p in products:
@@ -107,11 +107,11 @@ def createExlx(product_ids):
         for attr in p.getAttr():
             if j == 0 and attr != '':
                 worksheet.write(i, j, "", cell_format)
-                worksheet.insert_image(i, j, str(BASE_DIR) + "\\" + attr, {"x_scale": 0.7, "y_scale": 0.7,"x_offset": 1, "y_offset": 1})
+                worksheet.insert_image(i, j, str(BASE_DIR) + "\\" + attr, {"x_scale": 1, "y_scale": 1,"x_offset": 1, "y_offset": 1})
             else:
                 worksheet.write(i, j, attr, cell_format)
             j+=1
-            worksheet.set_row(i, 60) 
+            worksheet.set_row(i, 80) 
         i+=1
     header_format.set_align('center')
     header_format.set_align('vcenter')
@@ -131,3 +131,4 @@ def createExlx(product_ids):
 
     output.close()
     return response
+
