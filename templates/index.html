@@ -20,7 +20,7 @@
     <div class="main">
         <h1>Загрузка товаров из файла xlsx</h1>
         <p>Загрузите файл с информацией о новаых товарах</p>
-        <form action="{% url 'loadFile' %}" method="post" enctype="multipart/form-data" class="forms"> {% csrf_token %}
+        <form action="{% url 'loadFile' %}" method="GET" enctype="multipart/form-data" class="forms"> {% csrf_token %}
             <div class="form-group">
                 <input  required type="file" name="file"accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" >
                 
@@ -56,9 +56,39 @@
                   </tr>
                 </thead>
                 <tbody>
-                {% for product in products %}
+                    
+                <div class="cfrs_tocken">{% csrf_token %}</div>                    
+
+                <!-- {% for product in products %}
+                  <tr>
+                    <form class="from_{{product.id}}" onsubmit="sendForm(event);" data-id="{{product.id}}"  method="GET" enctype="multipart/form-data" action="{% url 'changeProduct' %}"> {% csrf_token %}
+                        <input  type="hidden" name="id" value="{{product.id}}">
+                        <td>
+                            {% if product.image %}
+                              <img src="{{ product.image }}" class="img-thumbnail" alt="Картинка продукта">
+                            {% endif %}
+                            <div class="field__wrapper">
+                                <input accept="image/jpeg image/jpg" type="file" name="file" id="l{{product.id}}" class="field field__file">
+                                <label class="field__file-wrapper wrapper{{product.id}}" for="l{{product.id}}">
+                                  <div class="field__file-fake fakel{{product.id}}">X</div>
+                                  <div class="field__file-button btn_btn-secondary bt{{product.id}}">Выбрать</div>
+                                </label>
+                             </div>
+                        </td>
+                        <td> <textarea id="name-{{product.id}}" maxlength="300" required type="text" name="name" >{{ product.name }}</textarea></td>
+                        <td> <textarea id="place-{{product.id}}" maxlength="300" required type="text" name="place">{{ product.place }}</textarea></td>
+                        <td> <textarea id="facturer-{{product.id}}" maxlength="150" required type="text" name="facturer" >{{ product.facturer }}</textarea></td>
+                        <td> <textarea id="facturer_сountry-{{product.id}}" maxlength="150" required type="text" name="facturer_сountry">{{ product.facturer_сountry }}</textarea></td>
+                        <td> <textarea id="desc-{{product.id}}" maxlength="300" type="text" name="descripton">{{ product.descripton }}</textarea></td>
+                        <td><input  class="btn_btn-secondary" type="submit" value="Изменить"></td>
+                    </form>
+   
+                  </tr>
+                  {% endfor %} -->
+
+                  {% for product in products %}
                   <tr id="{{ product.id }}">
-                    <form  method="post" enctype="multipart/form-data" action="{% url 'changeProduct' %}"> {% csrf_token %}
+                    <form onsubmit="sendForm(event);" data-id="{{product.id}}"  method="POST" enctype="multipart/form-data" action="{% url 'changeProduct' %}"> {% csrf_token %}
                         <input type="hidden" name="id" value="{{product.id}}">
                         <td>
                             {% if product.image %}
@@ -72,12 +102,12 @@
                                 </label>
                              </div>
                         </td>
-                        <td scope="row" > <textarea maxlength="300" required type="text" name="name" >{{ product.name }}</textarea></td>
-                        <td> <textarea maxlength="300" required type="text" name="place">{{ product.place }}</textarea></td>
-                        <td> <textarea maxlength="150" required type="text" name="facturer" >{{ product.facturer }}</textarea></td>
-                        <td> <textarea maxlength="150" required type="text" name="facturer_сountry">{{ product.facturer_сountry }}</textarea></td>
-                        <td> <textarea maxlength="300" type="text" name="descripton">{{ product.descripton }}</textarea></td>
-                        <td><input class="btn_btn-secondary" type="submit" value="Изменить"></td>
+                        <td> <textarea id="name-{{product.id}}" maxlength="300" required type="text" name="name" >{{ product.name }}</textarea></td>
+                        <td> <textarea id="place-{{product.id}}" maxlength="300" required type="text" name="place">{{ product.place }}</textarea></td>
+                        <td> <textarea id="facturer-{{product.id}}" maxlength="150" required type="text" name="facturer" >{{ product.facturer }}</textarea></td>
+                        <td> <textarea id="facturer_сountry-{{product.id}}" maxlength="150" required type="text" name="facturer_сountry">{{ product.facturer_сountry }}</textarea></td>
+                        <td> <textarea id="desc-{{product.id}}" maxlength="300" type="text" name="descripton">{{ product.descripton }}</textarea></td>
+                        <td><input  class="btn_btn-secondary" type="submit" value="Изменить"></td>
                     </form>
    
                   </tr>

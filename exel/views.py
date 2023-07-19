@@ -1,8 +1,10 @@
-from django.http import FileResponse, HttpResponse
+from django.http import FileResponse, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.views.generic import UpdateView
 from django.contrib import messages
 import openpyxl
+from django.views.decorators.csrf import csrf_exempt
+
 
 from exel.models import Product
 from .forms import ProductForm
@@ -40,27 +42,32 @@ def loadFile(request):
 def downLoadFile(request):
     return createExlx(request.session.get('ids', [])) 
 
-
 def change(request):
+    print(request.POST)
+    print(request.GET)
     if request.POST:
-        file = None
         id = request.POST['id']
+        name = request.POST['name']
+        file = None
+        
         try:
             file = request.FILES['file']
         except:
             pass 
-        name = request.POST['name']
+        
         if changeProdcut({
-            "file": file,
-            "id": id,
-            "name": name,
-            "place":  request.POST['place'],
-            "facturer": request.POST['facturer'],
-            "facturer_сountry": request.POST['facturer_сountry'],
-            "descripton": request.POST['descripton']
+                "file": file,
+                "id": id,
+                "name": name,
+                "place":  request.POST['place'],
+                "facturer": request.POST['facturer'],
+                "facturer_сountry": request.POST['facturer_сountry'],
+                "descripton": request.POST['descripton']
             }):
             messages.success(request, name + " запись обновленна.")
+            return JsonResponse({'process':'done'})
         else:
             messages.error(request, "Ошибка при обновлении записи.")
-    return redirect("/#" + id)
-    
+            return JsonResponse({'process':'falid'})
+        
+    return JsonResponse({'process':'undifine'})
