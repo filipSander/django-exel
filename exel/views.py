@@ -20,7 +20,13 @@ def loadFile(request):
     request.session['ids'] = []
     if request.POST:
             file = request.FILES['file']
-            uploading_file = uploadFile({"file": file})
+            uploading_file = uploadFile({
+                "file": file,
+                "start":request.POST['start'],
+                "end": request.POST['end'],
+                "priduct-col": request.POST['product-column'],
+                "facturer-col": request.POST['facturer-column']
+                })
             
             if len(uploading_file) > 0:
                 messages.success(request, "Файл загружен.")

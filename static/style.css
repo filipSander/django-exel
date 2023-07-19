@@ -10,6 +10,21 @@ body {
   font-size: 20px;
   margin-top: 12px;
 }
+.form-group input{
+  margin-bottom: 3px;
+  height: 30px;
+  width: 60px;
+}
+
+.form-group input:first-child{
+  margin-bottom: 3px;
+  height: auto;
+  width: 100%;
+}
+
+.form-group input:last-child{
+  margin-bottom: 12px;
+}
 
 .alert{
   display: block;
