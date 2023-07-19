@@ -33,79 +33,38 @@ def uploadFile(data):
 
     products_bulk_lust = list()
     ids = []
-    print(start)
-    print(end)
 
-    i = - 1
-    for row in sheet.iter_rows():
-        i += 1
-        if i >= start and i <= end:
-            name_product = row[product_name_col].value
-            if facturer_name_col >= 0:
-                name_facturer = row[facturer_name_col].value
+    try:
+        i = - 1
+        for row in sheet.iter_rows():
+            i += 1
+            if i >= start and i <= end:
+                name_product = row[product_name_col].value
+                if facturer_name_col >= 0:
+                    name_facturer = row[facturer_name_col].value
+                else:
+                    name_facturer = ""
+
+                products = Product.objects.filter(name=name_product)
+                if len(products) == 0:
+                    print('create product ' + name_product)
+                    newProduct = Product()
+                    newProduct.name = name_product
+                    newProduct.facturer = name_facturer
+                    products_bulk_lust.append(newProduct)
+                else:
+                    for p in products:
+                        Product.objects.filter(id=p.id).update(facturer=name_facturer)
+                        ids.append(p.id)
             else:
-                name_facturer = ""
-
-            products = Product.objects.filter(name=name_product)
-            if len(products) == 0:
-                print('create product ' + name_product)
-                newProduct = Product()
-                newProduct.name = name_product
-                newProduct.facturer = name_facturer
-                products_bulk_lust.append(newProduct)
-            else:
-                for p in products:
-                    Product.objects.filter(id=p.id).update(facturer=name_facturer)
-                    ids.append(p.id)
-        else:
-            continue
-        
-    Product.objects.bulk_create(products_bulk_lust)
-    for p in products_bulk_lust:
-        ids.append(p.id)
-    return ids
-
-        
-
-    # for i in range(data.get("start") + 1, data.get("end") + 2):
-    #     name_product = sheet.rows[product_name_col][i].value
-    #     name_facturer = sheet.rows[facturer_name_col][i].value
-    #     print(str(name_product) + " - ----- -" +  str(name_facturer))
-    #     raise
-
-
-        # products = Product.objects.filter(name=name_product)
-        # if len(products) == 0:
-        #     print('create product ' + name_product)
-        #     newProduct = Product()
-        #     newProduct.name = name_product
-        #     newProduct.facturer = name_facturer
-        #     products_bulk_lust.append(newProduct)
-        # else:
-        #     for p in products:
-        #         Product.objects.filter(id=p.id).update(facturer=name_facturer)
-        #         ids.append(p.id)
-        # raise
-
-    # for row in sheet.iter_rows():
-    #     if row[0].data_type == 'n' and row[1].data_type == 's' and row[5].data_type == 's':
-    #         products = Product.objects.filter(name=row[1].value)
-    #         if len(products) == 0:
-    #             print('create product ' + row[1].value)
-    #             newProduct = Product()
-    #             newProduct.name = row[1].value
-    #             newProduct.facturer = row[5].value
-    #             products_bulk_lust.append(newProduct)
-    #         else:
-    #             for p in products:
-    #                 Product.objects.filter(id=p.id).update(facturer=row[5].value)
-    #                 ids.append(p.id)
-    #     else:
-            # continue
+                continue
+    except:
+        pass
 
     Product.objects.bulk_create(products_bulk_lust)
     for p in products_bulk_lust:
         ids.append(p.id)
+
     return ids
 
 def getProducts(product_ids):
@@ -176,6 +135,8 @@ def createExlx(product_ids):
 
                 try:
                     dpi = float(image.info['dpi'][0])
+                except:
+                    pass
                 finally:
                     image.close
                 cell_height = (dpi * 0.94) * (cell_height / 100)

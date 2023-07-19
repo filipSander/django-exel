@@ -25,16 +25,16 @@
                 <input  required type="file" name="file"accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" >
                 
                 <label for="start">Начало строк с продуктами</label>
-                <input value="14" min="1" max="100" type="number" name="start">
+                <input required min="1" max="100" type="number" name="start">
     
                 <label for="end">Конец строк</label>
-                <input value="29"  min="1" max="100"type="number" name="end">
+                <input required   min="1" max="100"type="number" name="end">
                 
                 <label for="product-column">Столбец с названиями</label>
-                <input value="2"  min="1" max="100" type="number" name="product-column">
+                <input required min="1" max="100" type="number" name="product-column">
                 
                 <label for="facturer-column">Столбец с производителями. Если их нет, задайте значение 0</label>
-                <input value="6" min="0" max="100" type="number" name="facturer-column">
+                <input required  min="0" max="100" type="number" name="facturer-column">
             </div>
 
             
@@ -76,7 +76,7 @@
                         <td> <textarea maxlength="300" required type="text" name="place">{{ product.place }}</textarea></td>
                         <td> <textarea maxlength="150" required type="text" name="facturer" >{{ product.facturer }}</textarea></td>
                         <td> <textarea maxlength="150" required type="text" name="facturer_сountry">{{ product.facturer_сountry }}</textarea></td>
-                        <td> <textarea maxlength="300" required type="text" name="descripton">{{ product.descripton }}</textarea></td>
+                        <td> <textarea maxlength="300" type="text" name="descripton">{{ product.descripton }}</textarea></td>
                         <td><input class="btn_btn-secondary" type="submit" value="Изменить"></td>
                     </form>
    
