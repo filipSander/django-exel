@@ -1,3 +1,4 @@
+import json
 from django.http import FileResponse, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.views.generic import UpdateView
@@ -43,31 +44,24 @@ def downLoadFile(request):
     return createExlx(request.session.get('ids', [])) 
 
 def change(request):
-    print(request.POST)
-    print(request.GET)
     if request.POST:
-        id = request.POST['id']
-        name = request.POST['name']
         file = None
-        
+        id = request.POST['id']
         try:
             file = request.FILES['file']
         except:
             pass 
-        
-        if changeProdcut({
-                "file": file,
-                "id": id,
-                "name": name,
-                "place":  request.POST['place'],
-                "facturer": request.POST['facturer'],
-                "facturer_сountry": request.POST['facturer_сountry'],
-                "descripton": request.POST['descripton']
+        name = request.POST['name']
+        if not changeProdcut({
+            "file": file,
+            "id": id,
+            "name": name,
+            "place":  request.POST['place'],
+            "facturer": request.POST['facturer'],
+            "facturer_сountry": request.POST['facturer_сountry'],
+            "descripton": request.POST['descripton']
             }):
-            messages.success(request, name + " запись обновленна.")
-            return JsonResponse({'process':'done'})
-        else:
-            messages.error(request, "Ошибка при обновлении записи.")
-            return JsonResponse({'process':'falid'})
+                messages.error(request, "Ошибка при обновлении записи.")
+                return JsonResponse({"Status": "Failed"})
         
-    return JsonResponse({'process':'undifine'})
+    return JsonResponse({"Status": "ok"})
