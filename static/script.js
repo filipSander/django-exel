@@ -68,9 +68,9 @@ const sendData = async (url, data, name, tocken) => {
     })
     if (response.ok){
         console.log(data)
-        message( name + "запись обновленна.")
+        message( name + " Запись обновленна.")
     }else{
-        message(name + "Ошибка при обновлении записи.")
+        message(name + " Ошибка при обновлении записи.")
         throw new Error(`Ошибка, адресс ${url}, статус ${response}`)
     }
     return await response.json()

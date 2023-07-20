@@ -22,7 +22,7 @@
     <div class="main">
         <h1>Загрузка товаров из файла xlsx</h1>
         <p>Загрузите файл с информацией о новаых товарах</p>
-        <form action="{% url 'loadFile' %}" method="GET" enctype="multipart/form-data" class="forms"> {% csrf_token %}
+        <form action="{% url 'loadFile' %}" method="post" enctype="multipart/form-data" class="forms"> {% csrf_token %}
             <div class="form-group">
                 <input  required type="file" name="file"accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" >
                 
